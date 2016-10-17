@@ -92,6 +92,11 @@ public abstract class MediaEncoder implements Runnable {
         synchronized (mSync) {
             // create BufferInfo here for effectiveness(to reduce GC)
             mBufferInfo = new MediaCodec.BufferInfo();
+	   if (Build.VERSION.SDK_INT>21){
+		mBufferInfo.flags=BUFFER_FLAG_KEY_FRAME;
+		}else {
+		mBufferInfo.flags=BUFFER_FLAG_SYNC_FRAME;
+	    }
             // wait for starting thread
             new Thread(this, getClass().getSimpleName()).start();
             try {
