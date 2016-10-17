@@ -123,6 +123,11 @@ public class VideoRunnable extends Thread {
         if(DEBUG) Log.i(TAG, "VideoEncoder()");
         mFrameData = new byte[this.mWidth * this.mHeight * 3 / 2];
         mBufferInfo = new MediaCodec.BufferInfo();
+        if (Build.VERSION.SDK_INT>21){
+				mBufferInfo.flags=BUFFER_FLAG_KEY_FRAME;
+			}else {
+				mBufferInfo.flags=BUFFER_FLAG_SYNC_FRAME;
+			}
         codecInfo = selectCodec(MIME_TYPE);
         if (codecInfo == null) {
             if(DEBUG) Log.e(TAG, "Unable to find an appropriate codec for " + MIME_TYPE);
