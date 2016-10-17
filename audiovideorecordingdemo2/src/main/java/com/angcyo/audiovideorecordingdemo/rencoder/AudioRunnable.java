@@ -54,6 +54,11 @@ public class AudioRunnable extends Thread {
     public AudioRunnable(WeakReference<MediaMuxerRunnable> mediaMuxerRunnable) {
         this.mediaMuxerRunnable = mediaMuxerRunnable;
         mBufferInfo = new MediaCodec.BufferInfo();
+        if (Build.VERSION.SDK_INT>21){
+				mBufferInfo.flags=BUFFER_FLAG_KEY_FRAME;
+			}else {
+				mBufferInfo.flags=BUFFER_FLAG_SYNC_FRAME;
+		}
         prepare();
     }
 
